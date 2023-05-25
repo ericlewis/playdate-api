@@ -18,6 +18,10 @@ export default class PlaydateClient {
 	  Authorization: `Token ${this.token}`,
 	  "Content-Type": "application/json",
 	};
+
+	if (!this.token) {
+		console.warning("WARNING: there is no provided access token, you can use registerDevice to get one.")
+	}
   }
 
   /**
