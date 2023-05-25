@@ -380,4 +380,15 @@ export default class PlaydateClient {
   confirmPurchase(bundleId) {
 	return this._request(`/games/${bundleId}/purchase/confirm`, "POST");
   }
+
+  /**
+   * Makes a request to fetch firmware based on a provided version number.
+   * If no version is provided, it defaults to "1.13.6".
+   *
+   * @param {string} version - The version of the firmware to fetch.
+   * @return {Promise} The server's response to the request.
+   */
+  getFirmware(version = "1.13.6") {
+	return this._request(`/firmware?current_version=${version}`);
+  }
 }
