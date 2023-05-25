@@ -1,95 +1,49 @@
 # Playdate API Client
 
-The `playdate-api` package is a JavaScript library that interacts with various Playdate APIs. This library abstracts and simplifies the interaction with Playdate endpoints for tasks like user login, device registration, and game purchasing.
+This is a node library for interacting with various Playdate APIs.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+- [License](#license)
 
 ## Installation
 
-You can install `playdate-api` using npm:
+To use this package, you will need node 18+ and npm installed on your machine. Run the following command to install the package:
 
-```sh
+```bash
 npm install playdate-api
 ```
 
 ## Usage
 
-To use this library, you'll first need to import it:
+To use this library, you will need to import it and instantiate a new `PlaydateClient` with your Playdate API token.
 
 ```javascript
 import PlaydateClient from 'playdate-api';
+const client = new PlaydateClient('your-api-token');
 ```
 
-Next, create a new client instance with your Playdate token:
+The `PlaydateClient` class has several methods for interacting with the Playdate API. Note that some methods require the `login` method to be called first, since they need authentication.
 
-```javascript
-const client = new PlaydateClient('your-playdate-token');
-```
-
-Now you're ready to interact with the Playdate API!
+Access Token is only optional if you have a working one, otherwise you need to set one up via `registerDevice`.
 
 ## Examples
 
-### User Login
+Here's an example of how you could use this library to register a device:
 
 ```javascript
-const client = new PlaydateClient('your-playdate-token');
+import PlaydateClient from 'playdate-api';
 
-client.login('your-username', 'your-password')
-  .then(response => {
-	console.log('Login successful!', response);
-  })
-  .catch(error => {
-	console.error('An error occurred:', error);
-  });
+const client = new PlaydateClient();
+await client.login('username', 'password');
+const registrationData = await client.registerDevice('PDU1-Y123456');
+
+console.log(registrationData);
 ```
 
-### Registering a Device
+## License
 
-```javascript
-const client = new PlaydateClient('your-playdate-token');
-
-client.login('your-username', 'your-password')
-  .then(() => {
-	return client.registerDevice('PDU1-Y123456');
-  })
-  .then(response => {
-	console.log('Device registration successful!', response);
-  })
-  .catch(error => {
-	console.error('An error occurred:', error);
-  });
-```
-
-### Retrieving Player Profile
-
-```javascript
-const client = new PlaydateClient('your-playdate-token');
-
-client.getPlayer()
-  .then(response => {
-	console.log('Player profile:', response);
-  })
-  .catch(error => {
-	console.error('An error occurred:', error);
-  });
-```
-
-### Purchasing a Game
-
-```javascript
-const client = new PlaydateClient('your-playdate-token');
-
-client.login('your-username', 'your-password')
-  .then(() => {
-	return client.purchaseGame('game-bundle-id');
-  })
-  .then(response => {
-	console.log('Game purchase initiated!', response);
-	return client.confirmPurchase('game-bundle-id');
-  })
-  .then(response => {
-	console.log('Game purchase confirmed!', response);
-  })
-  .catch(error => {
-	console.error('An error occurred:', error);
-  });
-```
+This project is licensed under the MIT License.
